@@ -33,12 +33,14 @@
 </script>
 
 <div>
-  <h1>Users List</h1>
+  <h1 class="text-3xl text-red-400">Users List</h1>
   {#each users as user, index (user.id)}
     <div>
       <img src={user.img} alt={user.name} />
       <p>{user.name}</p>
       <p>{user.mail}</p>
     </div>
+  {:else}
+    <p>loading......</p>
   {/each}
 </div>
