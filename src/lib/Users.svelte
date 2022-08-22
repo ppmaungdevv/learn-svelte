@@ -35,12 +35,31 @@
       active: false,
     },
   ];
+  let filtered_users = users;
+  const filter = (e) => {
+    if (e.target.value === "null") {
+      filtered_users = users;
+      return;
+    }
+    const status = e.target.value === "true";
+    console.log(status);
+    filtered_users = users.filter((user) => user.active == status);
+  };
 </script>
 
 <div>
   <h1 class="text-2xl text-center mt-10">Users List</h1>
+  <select
+    on:change={filter}
+    name="user-filter"
+    class="py-2 px-4 bg-white border rounded ml-4"
+  >
+    <option value={null}>All</option>
+    <option value={true}>Active</option>
+    <option value={false}>Inactive</option>
+  </select>
   <!-- {#each users as { id, name, mail, img }, index (id)} -->
-  {#each users as user, index (user.id)}
+  {#each filtered_users as user, index (user.id)}
     <!-- <User {id} {name} {mail} {img} /> -->
     <User {user} />
   {:else}
