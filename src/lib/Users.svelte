@@ -57,6 +57,11 @@
     const status = detail === "true";
     filtered_users = users.filter((user) => user.active == status);
   };
+
+  const remove = (e) => {
+    const { detail } = e;
+    console.log(detail);
+  };
 </script>
 
 <div>
@@ -65,7 +70,7 @@
   <!-- {#each users as { id, name, mail, img }, index (id)} -->
   {#each filtered_users as user, index (user.id)}
     <!-- <User {id} {name} {mail} {img} /> -->
-    <User {user} />
+    <User {user} on:remove={remove} />
   {:else}
     <p>loading......</p>
   {/each}
