@@ -10,7 +10,7 @@
 <select
   on:change={filter}
   name="user-filter"
-  class="py-2 px-4 bg-white border rounded ml-4"
+  class="py-2 px-4 bg-white border rounded cursor-pointer"
 >
   <option value={null}>All</option>
   <option value={true}>Active</option>

@@ -5,6 +5,7 @@
   import hood_user from "../assets/img/hood_user.png";
   import User from "./User.svelte";
   import Filter from "./Filter.svelte";
+  import AddUser from "./AddUser.svelte";
 
   let users = [
     {
@@ -66,8 +67,11 @@
 </script>
 
 <div>
-  <h1 class="text-2xl text-center mt-10">Users List</h1>
-  <Filter on:filter={filter} />
+  <h1 class="text-2xl text-center mt-8">Users List</h1>
+  <div class="flex justify-between mx-4">
+    <Filter on:filter={filter} />
+    <AddUser />
+  </div>
   <!-- {#each users as { id, name, mail, img }, index (id)} -->
   {#each filtered_users as user, index (user.id)}
     <!-- <User {id} {name} {mail} {img} /> -->
