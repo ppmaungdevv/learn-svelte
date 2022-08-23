@@ -6,7 +6,7 @@
   import User from "./User.svelte";
   import Filter from "./Filter.svelte";
 
-  const users = [
+  let users = [
     {
       id: 1,
       name: "Manager_1",
@@ -36,7 +36,8 @@
       active: false,
     },
   ];
-  let filtered_users = users;
+  // let filtered_users = users;
+  $: filtered_users = users; // reactive variable
   // ------ normal event
   // const filter = (e) => {
   //   if (e.target.value === "null") {
@@ -50,8 +51,8 @@
   // -------- dispatch event
   const filter = (e) => {
     const { detail } = e;
-    console.log(typeof detail);
-    if (detail === "null") {
+    if (detail == "null") {
+      filtered_users = users;
       return;
     }
     const status = detail === "true";
@@ -60,7 +61,7 @@
 
   const remove = (e) => {
     const { detail } = e;
-    console.log(detail);
+    users = users.filter((user) => user.id !== detail);
   };
 </script>
 

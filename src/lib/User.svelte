@@ -6,7 +6,6 @@
   //   export let id, img, name, mail;
   const dispatch = createEventDispatcher();
   const deleteUser = () => {
-    console.log("delete");
     dispatch("remove", user.id);
   };
 </script>
