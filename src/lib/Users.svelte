@@ -64,13 +64,26 @@
     const { detail } = e;
     users = users.filter((user) => user.id !== detail);
   };
+  const addUser = (e) => {
+    const { detail } = e;
+    // ****** notice this when updating an array use destructure and assign to get reactivity
+    users = [
+      {
+        id: users.length + 1,
+        img: fml_user,
+        ...detail,
+      },
+      ...users,
+    ];
+    console.log(detail);
+  };
 </script>
 
 <div>
   <h1 class="text-2xl text-center mt-8">Users List</h1>
   <div class="flex justify-between mx-4">
     <Filter on:filter={filter} />
-    <AddUser />
+    <AddUser on:addUser={addUser} />
   </div>
   <!-- {#each users as { id, name, mail, img }, index (id)} -->
   {#each filtered_users as user, index (user.id)}
