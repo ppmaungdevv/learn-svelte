@@ -1,5 +1,6 @@
 <script>
-  import { createEventDispatcher, onMount } from "svelte";
+  import { createEventDispatcher, onDestroy, onMount } from "svelte";
+  import { loop_guard } from "svelte/internal";
   const dispatch = createEventDispatcher();
 
   const close = () => {
@@ -10,6 +11,15 @@
   };
   onMount(() => {
     console.log("Modal mounted.....");
+  });
+
+  const inter = setInterval(() => {
+    console.log("interval");
+  }, 1000);
+
+  onDestroy(() => {
+    console.log("Modal destroyed.......");
+    clearInterval(inter);
   });
 </script>
 
