@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   const dispatch = createEventDispatcher();
 
   const close = () => {
@@ -8,6 +8,9 @@
   const onSubmit = () => {
     dispatch("onSubmit");
   };
+  onMount(() => {
+    console.log("Modal mounted.....");
+  });
 </script>
 
 <div
@@ -29,6 +32,7 @@
           <slot />
           <div class="flex justify-between">
             <button
+              type="button"
               class="px-2 py-1 bg-white border rounded hover:bg-gray-200"
               on:click={close}>Close</button
             >
