@@ -1,44 +1,20 @@
 <script>
   import fml_user from "../assets/img/fml_user.png";
-  import fms_user from "../assets/img/fms_user.png";
-  import shirt_user from "../assets/img/shirt_user.png";
-  import hood_user from "../assets/img/hood_user.png";
+
   import User from "./User.svelte";
   import Filter from "./Filter.svelte";
   import AddUser from "./AddUser.svelte";
+  import { onMount } from "svelte";
 
-  let users = [
-    {
-      id: 1,
-      name: "Manager_1",
-      mail: "manager_1@m.co",
-      img: fml_user,
-      active: true,
-    },
-    {
-      id: 2,
-      name: "Hr",
-      mail: "humanresource@m.co",
-      img: shirt_user,
-      active: true,
-    },
-    {
-      id: 3,
-      name: "Developer_1",
-      mail: "developer_1@m.co",
-      img: fms_user,
-      active: true,
-    },
-    {
-      id: 4,
-      name: "Developer_2",
-      mail: "developer_2@m.co",
-      img: hood_user,
-      active: false,
-    },
-  ];
+  import { count, user_from_store, addUser, remove } from "../store";
+
+  onMount(() => {
+    console.log(count);
+  });
+
+  let users = $user_from_store; // shorthand for count.subscribe((val) => (count_val = val));
   // let filtered_users = users;
-  $: filtered_users = users; // reactive variable
+  $: filtered_users = $user_from_store; // reactive variable
   // ------ normal event
   // const filter = (e) => {
   //   if (e.target.value === "null") {
@@ -53,33 +29,29 @@
   const filter = (e) => {
     const { detail } = e;
     if (detail == "null") {
-      filtered_users = users;
+      filtered_users = $user_from_store;
       return;
     }
     const status = detail === "true";
-    filtered_users = users.filter((user) => user.active == status);
+    filtered_users = $user_from_store.filter((user) => user.active == status);
   };
 
-  const remove = (e) => {
-    const { detail } = e;
-    users = users.filter((user) => user.id !== detail);
+  // --------- svelte store
+  let count_val;
+  count.subscribe((val) => (count_val = val));
+
+  const inc = () => {
+    count.update((val) => val + 1);
   };
-  const addUser = (e) => {
-    const { detail } = e;
-    // ****** notice this when updating an array use destructure and assign to get reactivity
-    users = [
-      {
-        id: users.length + 1,
-        img: fml_user,
-        ...detail,
-      },
-      ...users,
-    ];
-    console.log(detail);
+  const desc = () => {
+    count.update((val) => val - 1);
   };
 </script>
 
 <div>
+  <button on:click={inc}>+</button>
+  <button on:click={desc}>-</button>
+  {count_val}
   <h1 class="text-2xl text-center mt-8">Users List</h1>
   <div class="flex justify-between mx-4">
     <Filter on:filter={filter} />

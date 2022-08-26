@@ -1,6 +1,5 @@
 <script>
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
-  import { loop_guard } from "svelte/internal";
   const dispatch = createEventDispatcher();
 
   const close = () => {
