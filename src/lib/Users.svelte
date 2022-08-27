@@ -6,7 +6,8 @@
   import AddUser from "./AddUser.svelte";
   import { onMount } from "svelte";
   import { tweened } from "svelte/motion";
-  import { bounceIn } from "svelte/easing";
+  import { bounceIn, quintOut } from "svelte/easing";
+  import { flip } from "svelte/animate";
 
   import { count, user_from_store, addUser, remove } from "../store";
 
@@ -69,8 +70,10 @@
   <progress max="10" min="0" value={$progress} class="ml-4" />
   <!-- {#each users as { id, name, mail, img }, index (id)} -->
   {#each filtered_users as user, index (user.id)}
-    <!-- <User {id} {name} {mail} {img} /> -->
-    <User {user} on:remove={remove} />
+    <div animate:flip={{ delay: 250, duration: 1000, easing: quintOut }}>
+      <!-- <User {id} {name} {mail} {img} /> -->
+      <User {user} on:remove={remove} />
+    </div>
   {:else}
     <p>loading......</p>
   {/each}
