@@ -1,6 +1,7 @@
 <script>
   import { identity } from "svelte/internal";
   import { createEventDispatcher } from "svelte";
+  import { fly, blur } from "svelte/transition";
 
   export let user;
   //   export let id, img, name, mail;
@@ -11,6 +12,7 @@
 </script>
 
 <div
+  transition:fly={{ duration: 1000, x: 200 }}
   class="flex m-5 bg-white border p-2 rounded-lg shadow-md hover:shadow-lg cursor-pointer items-center relative"
 >
   <button
