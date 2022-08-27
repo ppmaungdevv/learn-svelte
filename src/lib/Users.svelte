@@ -5,16 +5,25 @@
   import Filter from "./Filter.svelte";
   import AddUser from "./AddUser.svelte";
   import { onMount } from "svelte";
+  import { tweened } from "svelte/motion";
+  import { bounceIn } from "svelte/easing";
 
   import { count, user_from_store, addUser, remove } from "../store";
 
+  $: filtered_users = $user_from_store; // reactive variable
+  // ------------ tween
+  const progress = tweened(0, {
+    duration: 1000,
+    easing: bounceIn,
+  });
+
   onMount(() => {
     console.log(count);
+    progress.set(filtered_users.length);
   });
 
   let users = $user_from_store; // shorthand for count.subscribe((val) => (count_val = val));
   // let filtered_users = users;
-  $: filtered_users = $user_from_store; // reactive variable
   // ------ normal event
   // const filter = (e) => {
   //   if (e.target.value === "null") {
@@ -57,6 +66,7 @@
     <Filter on:filter={filter} />
     <AddUser on:addUser={addUser} />
   </div>
+  <progress max="10" min="0" value={$progress} class="ml-4" />
   <!-- {#each users as { id, name, mail, img }, index (id)} -->
   {#each filtered_users as user, index (user.id)}
     <!-- <User {id} {name} {mail} {img} /> -->
